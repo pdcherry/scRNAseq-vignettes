@@ -25,6 +25,9 @@ Patrick Cherry
   Selection (identification of highly variable features)</a>
 - <a href="#scaling-the-data" id="toc-scaling-the-data">Scaling the
   data</a>
+  - <a href="#this-step-takes-too-long-can-i-make-it-faster"
+    id="toc-this-step-takes-too-long-can-i-make-it-faster">This step takes
+    too long! Can I make it faster?</a>
 - <a href="#perform-linear-dimensional-reduction"
   id="toc-perform-linear-dimensional-reduction">Perform linear dimensional
   reduction</a>
@@ -312,12 +315,13 @@ pbmc <- ScaleData(pbmc, features = all.genes)
 
     ## Centering and scaling data matrix
 
-\###This step takes too long! Can I make it faster? Scaling is an
-essential step in the Seurat workflow, but only on genes that will be
-used as input to PCA. Therefore, the default in `ScaleData()` is only to
-perform scaling on the previously identified variable features (2,000 by
-default). To do this, omit the `features` argument in the previous
-function call, i.e.
+### This step takes too long! Can I make it faster?
+
+Scaling is an essential step in the Seurat workflow, but only on genes
+that will be used as input to PCA. Therefore, the default in
+`ScaleData()` is only to perform scaling on the previously identified
+variable features (2,000 by default). To do this, omit the `features`
+argument in the previous function call, i.e.
 
 ``` r
 pbmc <- ScaleData(pbmc)
@@ -328,12 +332,8 @@ heatmaps (produced as shown below with `DoHeatmap()`) require genes in
 the heatmap to be scaled, to make sure highly-expressed genes don’t
 dominate the heatmap. To make sure we don’t leave any genes out of the
 heatmap later, we are scaling all genes in this tutorial.
-</details>
-  
-<details>
-<summary>
-**How can I remove unwanted sources of variation, as in Seurat v2?**
-</summary>
+
+#### How can I remove unwanted sources of variation, as in Seurat v2?
 
 In `Seurat v2` we also use the `ScaleData()` function to remove unwanted
 sources of variation from a single-cell dataset. For example, we could
@@ -352,9 +352,6 @@ workflow, `SCTransform()`. The method is described in our
 with a separate vignette using Seurat v3
 [here](sctransform_vignette.html). As with `ScaleData()`, the function
 `SCTransform()` also includes a `vars.to.regress` parameter.
-</details>
-
-  
 
 ------------------------------------------------------------------------
 
@@ -537,8 +534,6 @@ We chose 10 here, but encourage users to consider the following:
   parameter. For example, performing downstream analyses with only 5 PCs
   does significantly and adversely affect results.
 
-------------------------------------------------------------------------
-
 # Cluster the cells
 
 Seurat v3 applies a graph-based clustering approach, building upon
@@ -612,8 +607,6 @@ head(Idents(pbmc), 5)
     ##                6 
     ## Levels: 0 1 2 3 4 5 6 7 8
 
-------------------------------------------------------------------------
-
 # Run non-linear dimensional reduction (UMAP/tSNE)
 
 Seurat offers several non-linear dimensional reduction techniques, such
@@ -633,26 +626,26 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
     ## To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'
     ## This message will be shown once per session
 
-    ## 08:40:39 UMAP embedding parameters a = 0.9922 b = 1.112
+    ## 22:11:17 UMAP embedding parameters a = 0.9922 b = 1.112
 
-    ## 08:40:39 Read 2638 rows and found 10 numeric columns
+    ## 22:11:17 Read 2638 rows and found 10 numeric columns
 
-    ## 08:40:39 Using Annoy for neighbor search, n_neighbors = 30
+    ## 22:11:17 Using Annoy for neighbor search, n_neighbors = 30
 
-    ## 08:40:39 Building Annoy index with metric = cosine, n_trees = 50
+    ## 22:11:17 Building Annoy index with metric = cosine, n_trees = 50
 
     ## 0%   10   20   30   40   50   60   70   80   90   100%
 
     ## [----|----|----|----|----|----|----|----|----|----|
 
     ## **************************************************|
-    ## 08:40:39 Writing NN index file to temp file /var/folders/11/sfzn5hhx2995d534f55tvzd40000gn/T//Rtmp4C70vd/file8117980cbf3
-    ## 08:40:39 Searching Annoy index using 1 thread, search_k = 3000
-    ## 08:40:39 Annoy recall = 100%
-    ## 08:40:40 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-    ## 08:40:40 Initializing from normalized Laplacian + noise (using irlba)
-    ## 08:40:40 Commencing optimization for 500 epochs, with 105124 positive edges
-    ## 08:40:44 Optimization finished
+    ## 22:11:17 Writing NN index file to temp file /var/folders/11/sfzn5hhx2995d534f55tvzd40000gn/T//RtmpHZ0H5A/file102755905db8
+    ## 22:11:17 Searching Annoy index using 1 thread, search_k = 3000
+    ## 22:11:18 Annoy recall = 100%
+    ## 22:11:18 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+    ## 22:11:19 Initializing from normalized Laplacian + noise (using irlba)
+    ## 22:11:19 Commencing optimization for 500 epochs, with 105124 positive edges
+    ## 22:11:23 Optimization finished
 
 ``` r
 # note that you can set `label = TRUE` or use the LabelClusters function to help label individual clusters
